@@ -25,7 +25,7 @@
 
 ``` bash
 # clone the repo
-$ git clone https://github.com/coreui/coreui-free-laravel-admin-template.git my-project
+$ git clone https://github.com/alexsnowb/api-on-laravel.git my-project
 
 # go into app's directory
 $ cd my-project
