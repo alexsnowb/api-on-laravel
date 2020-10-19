@@ -1,14 +1,14 @@
 {
-    "name": "laravel/laravel",
+    "name": "alexsnowb/api-on-laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Laravel 8 + CoreUI + TDD + RestAPI + Swagger",
     "keywords": [
         "framework",
         "laravel"
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4.5",
         "fideloper/proxy": "^4.2",
         "laravel/framework": "^8.0",
         "fruitcake/laravel-cors": "^1.0",
