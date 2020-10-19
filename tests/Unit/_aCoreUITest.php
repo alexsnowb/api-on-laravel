@@ -19,12 +19,12 @@ class _aCoreUITest extends TestCase
 
     public function testHomepage(){
         $response = $this->get( '/' );
-        $response->assertStatus(200);
+        $response->assertRedirect('/login');
     }
 
     public function testColors(){
         $response = $this->get( '/colors' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testColorsActingAsUser(){
@@ -37,8 +37,8 @@ class _aCoreUITest extends TestCase
 
     public function testTypography(){
         $response = $this->get( '/typography' );
-        $response->assertStatus(403);
-    }   
+        $response->assertRedirect('/login');
+    }
 
     public function testTypographyActingAsUser(){
         $user = User::factory()->create();
@@ -51,7 +51,7 @@ class _aCoreUITest extends TestCase
 /* ################   BASE   ############### */
     public function testBaseBreadcrumb(){
         $response = $this->get( '/base/breadcrumb' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseBreadcrumbActingAsUser(){
@@ -64,7 +64,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseCards(){
         $response = $this->get( '/base/cards' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseCardsActingAsUser(){
@@ -77,7 +77,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseCarousel(){
         $response = $this->get( '/base/carousel' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseCarouselActingAsUser(){
@@ -90,7 +90,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseCollapse(){
         $response = $this->get( '/base/collapse' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseCollapseActingAsUser(){
@@ -103,7 +103,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseForms(){
         $response = $this->get( '/base/forms' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseFormsActingAsUser(){
@@ -116,7 +116,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseJumbotron(){
         $response = $this->get( '/base/jumbotron' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseJumbotronActingAsUser(){
@@ -129,7 +129,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseListgroup(){
         $response = $this->get( '/base/list-group' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseBaseListgroupActingAsUser(){
@@ -142,7 +142,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseNavs(){
         $response = $this->get( '/base/navs' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseNavsActingAsUser(){
@@ -151,11 +151,11 @@ class _aCoreUITest extends TestCase
         $user->assignRole($roleUser);
         $response = $this->actingAs($user)->get( '/base/navs' );
         $response->assertStatus(200);
-    }    
+    }
 
     public function testBasePagination(){
         $response = $this->get( '/base/pagination' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBasePaginationActingAsUser(){
@@ -168,7 +168,7 @@ class _aCoreUITest extends TestCase
 
     public function testBasePopovers(){
         $response = $this->get( '/base/popovers' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBasePopoversActingAsUser(){
@@ -181,7 +181,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseProgress(){
         $response = $this->get( '/base/progress' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseProgressActingAsUser(){
@@ -194,7 +194,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseScrollSpy(){
         $response = $this->get( '/base/scrollspy' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseScrollspyActingAsUser(){
@@ -207,7 +207,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseSwitches(){
         $response = $this->get( '/base/switches' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseSwitchesActingAsUser(){
@@ -220,7 +220,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseTables(){
         $response = $this->get( '/base/tables' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseTablesActingAsUser(){
@@ -233,7 +233,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseTabs(){
         $response = $this->get( '/base/tabs' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseTabsActingAsUser(){
@@ -246,7 +246,7 @@ class _aCoreUITest extends TestCase
 
     public function testBaseTooltips(){
         $response = $this->get( '/base/tooltips' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBaseTooltipsActingAsUser(){
@@ -260,7 +260,7 @@ class _aCoreUITest extends TestCase
 /* #################   BUTTONS   ###################  */
     public function testButtonsButtons(){
         $response = $this->get( '/buttons/buttons' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testButtonsButtonsActingAsUser(){
@@ -273,7 +273,7 @@ class _aCoreUITest extends TestCase
 
     public function testButtonsButtongroup(){
         $response = $this->get( '/buttons/button-group' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testButtonsButtonsgroupActingAsUser(){
@@ -286,7 +286,7 @@ class _aCoreUITest extends TestCase
 
     public function testButtonsDropdowns(){
         $response = $this->get( '/buttons/dropdowns' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testButtonsDropdownsActingAsUser(){
@@ -299,7 +299,7 @@ class _aCoreUITest extends TestCase
 
     public function testBrandButtons(){
         $response = $this->get( '/buttons/brand-buttons' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testBrandButtonsActingAsUser(){
@@ -314,7 +314,7 @@ class _aCoreUITest extends TestCase
 
     public function testCharts(){
         $response = $this->get( '/charts' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testChartsActingAsUser(){
@@ -328,7 +328,7 @@ class _aCoreUITest extends TestCase
 /*  #################    ICONS    ################# */
     public function testIconsCoreuiIcons(){
         $response = $this->get( '/icon/coreui-icons' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testIconsCoreuiIconsActingAsUser(){
@@ -341,7 +341,7 @@ class _aCoreUITest extends TestCase
 
     public function testIconsFlags(){
         $response = $this->get( '/icon/flags' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testIconsFlagsActingAsUser(){
@@ -354,7 +354,7 @@ class _aCoreUITest extends TestCase
 
     public function testIconsBrands(){
         $response = $this->get( '/icon/brands' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testIconsBrandsActingAsUser(){
@@ -364,11 +364,11 @@ class _aCoreUITest extends TestCase
         $response = $this->actingAs($user)->get( '/icon/brands' );
         $response->assertStatus(200);
     }
-    
+
 /*  ###############    NOTIFICATIONS    ################# */
     public function testNotificationsAlerts(){
         $response = $this->get( '/notifications/alerts' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testNotificationsAlertsActingAsUser(){
@@ -381,7 +381,7 @@ class _aCoreUITest extends TestCase
 
     public function testNotificationsBadge(){
         $response = $this->get( '/notifications/badge' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testNotificationsBadgeActingAsUser(){
@@ -394,7 +394,7 @@ class _aCoreUITest extends TestCase
 
     public function testNotificationsModals(){
         $response = $this->get( '/notifications/modals' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testNotificationsModalsActingAsUser(){
@@ -408,7 +408,7 @@ class _aCoreUITest extends TestCase
 /*  ##############   WIDGETS   ###############  */
     public function testWidgets(){
         $response = $this->get( '/widgets' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function testWidgetsActingAsUser(){
@@ -432,7 +432,7 @@ class _aCoreUITest extends TestCase
 
     public function test404(){
         $response = $this->get( '/404' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function test404ActingAsUser(){
@@ -445,7 +445,7 @@ class _aCoreUITest extends TestCase
 
     public function test500(){
         $response = $this->get( '/500' );
-        $response->assertStatus(403);
+        $response->assertRedirect('/login');
     }
 
     public function test500ActingAsUser(){
