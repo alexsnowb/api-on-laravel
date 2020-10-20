@@ -23,6 +23,8 @@
               <svg class="c-icon">
                 <use xlink:href="{{ url('/icons/sprites/free.svg#cil-envelope-open') }}"></use>
               </svg></a></li>
+
+          @if(Auth::check())
           <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <div class="c-avatar"><img class="c-avatar-img" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" ></div>
             </a>
@@ -62,6 +64,7 @@
                 </svg><form action="{{ url('/logout') }}" method="POST"> @csrf <button type="submit" class="btn btn-ghost-dark btn-block">Logout</button></form></a>
             </div>
           </li>
+          @endif
         </ul>
         <div class="c-subheader px-3">
           <ol class="breadcrumb border-0 m-0">

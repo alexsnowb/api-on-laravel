@@ -82,7 +82,7 @@ class ResourceTest extends TestCase
     }
 
     public function helperCreateRoleGuest($formId = 1, $permissions = false){
-        $role = Role::create(['name' => 'guest']); 
+        $role = Role::create(['name' => 'guest']);
         if($permissions){
             $this->helperCreatePermissions($role, $formId);
         }
@@ -90,10 +90,10 @@ class ResourceTest extends TestCase
     }
 
     public function helperCreatePermissions($role, $formId = 1){
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -102,7 +102,7 @@ class ResourceTest extends TestCase
         $role->givePermissionTo('delete bread '     . $formId);
     }
 
-    
+
     public function testIndexAccessDenied(){
         $this->helperCreateRoleGuest(1,false);
         $this->helperCreateExample('Record_name_1');
@@ -127,12 +127,12 @@ class ResourceTest extends TestCase
         $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -145,7 +145,7 @@ class ResourceTest extends TestCase
         $response->assertSee('Record_name_1');
         $response->assertSee('Form_name_1');
     }
- 
+
     public function testCreateAccessDenied(){
         $this->helperCreateRoleGuest(1,false);
         $this->helperCreateExample('Record_name_1');
@@ -163,7 +163,7 @@ class ResourceTest extends TestCase
         //var_dump( $response->getContent() );
         $response->assertStatus( 401 );
     }
-    
+
     public function testCreate(){
         $this->helperCreateRoleGuest(1,true);
         $this->helperCreateExample('Record_name_1');
@@ -181,12 +181,12 @@ class ResourceTest extends TestCase
         $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -201,7 +201,7 @@ class ResourceTest extends TestCase
         $response->assertSee('description');
         $response->assertSee('status_id');
     }
-        
+
     public function testStoreAccessDenied(){
         $this->helperCreateRoleGuest(1,false);
         $this->helperCreateExample('Record_name_1');
@@ -251,12 +251,12 @@ class ResourceTest extends TestCase
         $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -276,7 +276,7 @@ class ResourceTest extends TestCase
         ]);
         $response->assertStatus( 302 );
     }
-    
+
 
     public function testShowAccessDenied(){
         $this->helperCreateRoleGuest(1,false);
@@ -295,7 +295,7 @@ class ResourceTest extends TestCase
         //var_dump( $response->getContent() );
         $response->assertStatus( 401 );
     }
-    
+
 
     public function testShow(){
         $this->helperCreateRoleGuest(1,true);
@@ -314,12 +314,12 @@ class ResourceTest extends TestCase
         $exampleId = $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -372,12 +372,12 @@ class ResourceTest extends TestCase
         $exampleId = $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -441,12 +441,12 @@ class ResourceTest extends TestCase
         $exampleId = $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -520,12 +520,12 @@ class ResourceTest extends TestCase
         $exampleId = $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
@@ -545,12 +545,12 @@ class ResourceTest extends TestCase
         $exampleId = $this->helperCreateExample('Record_name_1');
         $formId = $this->helperCreateForm('Form_name_1', true);
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'user']); 
+        $role = Role::create(['name' => 'user']);
         $user->assignRole($role);
-        Permission::create(['name' => 'browse bread '   . $formId]); 
-        Permission::create(['name' => 'read bread '     . $formId]); 
-        Permission::create(['name' => 'edit bread '     . $formId]); 
-        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'browse bread '   . $formId]);
+        Permission::create(['name' => 'read bread '     . $formId]);
+        Permission::create(['name' => 'edit bread '     . $formId]);
+        Permission::create(['name' => 'add bread '      . $formId]);
         Permission::create(['name' => 'delete bread '   . $formId]);
         $role->givePermissionTo('browse bread '     . $formId);
         $role->givePermissionTo('read bread '       . $formId);
