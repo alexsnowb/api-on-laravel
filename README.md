@@ -282,6 +282,11 @@ If the column is a foreign key, it should be specified: in the field "Optional r
 #### E-mail Templates
 It is an example of managing e-mail templates. Allows you to create, edit and delete templates. It also allows you to send an E-mail to a selected address.
 
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+CoreUI released under released under [the MIT license](https://github.com/coreui/coreui-free-bootstrap-admin-template/blob/master/LICENSE).
 
 ## Support CoreUI Development
 
