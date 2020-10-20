@@ -87,14 +87,14 @@ class MenuBuilderTest extends TestCase
             'href' => '/hrefOne',
             'hasIcon' => false,
             'sequence' => 0
-        ),array(
+        ), array(
             'id' => 2,
             'slug' => 'link',
             'name' => 'nameTwo',
             'href' => '/hrefTwo',
             'hasIcon' => false,
             'sequence' => 0
-        ),array(
+        ), array(
             'id' => 3,
             'slug' => 'link',
             'name' => 'nameThree',
@@ -110,7 +110,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testAddSingleTitleWitchIcon()
@@ -130,7 +130,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testAddSingleTitleWitchDefaultIconType()
@@ -150,7 +150,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testAddSingleTitleNoIcon()
@@ -168,7 +168,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testAddThreeTitle()
@@ -179,13 +179,13 @@ class MenuBuilderTest extends TestCase
             'name' => 'nameOne',
             'hasIcon' => false,
             'sequence' => 0
-        ),array(
+        ), array(
             'id' => 2,
             'slug' => 'title',
             'name' => 'nameTwo',
             'hasIcon' => false,
             'sequence' => 0
-        ),array(
+        ), array(
             'id' => 3,
             'slug' => 'title',
             'name' => 'nameThree',
@@ -200,7 +200,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testBeginDropdownWitchIcon()
@@ -221,7 +221,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testBeginDropdownWitchDefaultIconType()
@@ -242,7 +242,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testBeginDropdownWitchNoIcon()
@@ -261,7 +261,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testThreeBeginDropdown()
@@ -273,14 +273,14 @@ class MenuBuilderTest extends TestCase
             'hasIcon' => false,
             'elements' => array(),
             'sequence' => 0
-        ),array(
+        ), array(
             'id' => 2,
             'slug' => 'dropdown',
             'name' => 'nameTwo',
             'hasIcon' => false,
             'elements' => array(),
             'sequence' => 0
-        ),array(
+        ), array(
             'id' => 3,
             'slug' => 'dropdown',
             'name' => 'nameThree',
@@ -299,7 +299,7 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    /** 
+    /**
      * @return void
      */
     public function testBeginDropdownWitchTwoElements()
@@ -338,7 +338,8 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    public function testLinkInDropdownInDropdown(){
+    public function testLinkInDropdownInDropdown()
+    {
         $provided = array(array(
             'id' => 1,
             'slug' => 'dropdown',
@@ -371,7 +372,8 @@ class MenuBuilderTest extends TestCase
         $this->assertSame($provided, $result);
     }
 
-    public function testComplex(){
+    public function testComplex()
+    {
         $provided = array(
             array(
                 'id' => 1,
@@ -381,52 +383,52 @@ class MenuBuilderTest extends TestCase
                 'sequence' => 0
             ),
             array(
-            'id' => 2,
-            'slug' => 'dropdown',
-            'name' => 'nameOne',
-            'hasIcon' => false,
-            'elements' => array(
-                array(
-                    'id' => 3,
-                    'slug' => 'link',
-                    'name' => 'nameTwo',
-                    'href' => '/href',
-                    'hasIcon' => false,
-                    'sequence' => 0
-                ),
-                array(
-                    'id' => 4,
-                    'slug' => 'link',
-                    'name' => 'nameTwo',
-                    'href' => '/href',
-                    'hasIcon' => false,
-                    'sequence' => 0
-                ),
-                array(
-                'id' => 5,
+                'id' => 2,
                 'slug' => 'dropdown',
                 'name' => 'nameOne',
                 'hasIcon' => false,
-                'elements' => array(array(
-                    'id' => 6,
-                    'slug' => 'link',
-                    'name' => 'nameTwo',
-                    'href' => '/href',
-                    'hasIcon' => false,
-                    'sequence' => 0
-                )),
-                'sequence' => 0
+                'elements' => array(
+                    array(
+                        'id' => 3,
+                        'slug' => 'link',
+                        'name' => 'nameTwo',
+                        'href' => '/href',
+                        'hasIcon' => false,
+                        'sequence' => 0
+                    ),
+                    array(
+                        'id' => 4,
+                        'slug' => 'link',
+                        'name' => 'nameTwo',
+                        'href' => '/href',
+                        'hasIcon' => false,
+                        'sequence' => 0
+                    ),
+                    array(
+                        'id' => 5,
+                        'slug' => 'dropdown',
+                        'name' => 'nameOne',
+                        'hasIcon' => false,
+                        'elements' => array(array(
+                            'id' => 6,
+                            'slug' => 'link',
+                            'name' => 'nameTwo',
+                            'href' => '/href',
+                            'hasIcon' => false,
+                            'sequence' => 0
+                        )),
+                        'sequence' => 0
+                    ),
+                    array(
+                        'id' => 7,
+                        'slug' => 'link',
+                        'name' => 'nameTwo',
+                        'href' => '/href',
+                        'hasIcon' => false,
+                        'sequence' => 0
+                    )
                 ),
-                array(
-                    'id' => 7,
-                    'slug' => 'link',
-                    'name' => 'nameTwo',
-                    'href' => '/href',
-                    'hasIcon' => false,
-                    'sequence' => 0
-                )
-            ),
-            'sequence' => 0
+                'sequence' => 0
             ),
             array(
                 'id' => 8,
@@ -435,7 +437,7 @@ class MenuBuilderTest extends TestCase
                 'href' => '/href',
                 'hasIcon' => false,
                 'sequence' => 0
-            ) 
+            )
         );
         $mb = new MenuBuilder();
         $mb->addTitle(1, 'name');

@@ -36,7 +36,7 @@ class RenderFromDatabaseDataTest extends TestCase
             'icon' => 'cui-speedometer',
             'iconType' => 'coreui',
             'sequence' => '1'
-        ));        
+        ));
         $rfd = new RenderFromDatabaseData();
         $result = $rfd->render($input);
         $this->assertSame($result, $provided);
@@ -90,25 +90,25 @@ class RenderFromDatabaseDataTest extends TestCase
             'iconType' => 'coreui',
             'sequence' => '1'
         ),
-        array(
-            'id' => '7',
-            'slug' => 'dropdown',
-            'name' => 'Base',
-            'hasIcon' => true,
-            'icon' => 'cui-puzzle',
-            'iconType' => 'coreui',
-            'elements' => array(
-                array(
-                    'id' => '8',
-                    'slug' => 'link',
-                    'name' => 'Breadcrumb',
-                    'href' => '/base/breadcrumb',
-                    'hasIcon' => false,
-                    'sequence' => '8'
-                )
-            ),
-            'sequence' => '7'
-        ));        
+            array(
+                'id' => '7',
+                'slug' => 'dropdown',
+                'name' => 'Base',
+                'hasIcon' => true,
+                'icon' => 'cui-puzzle',
+                'iconType' => 'coreui',
+                'elements' => array(
+                    array(
+                        'id' => '8',
+                        'slug' => 'link',
+                        'name' => 'Breadcrumb',
+                        'href' => '/base/breadcrumb',
+                        'hasIcon' => false,
+                        'sequence' => '8'
+                    )
+                ),
+                'sequence' => '7'
+            ));
         $rfd = new RenderFromDatabaseData();
         $result = $rfd->render($input);
         $this->assertSame($result, $provided);

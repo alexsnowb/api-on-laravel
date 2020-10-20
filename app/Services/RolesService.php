@@ -8,14 +8,16 @@ namespace App\Services;
 
 use Spatie\Permission\Models\Role;
 
-class RolesService{
+class RolesService
+{
 
     static $defaultRoles = ['guest'];
 
-    public static function get(){
+    public static function get()
+    {
         $roles = Role::all();
         $result = array();
-        foreach($roles as $role){
+        foreach ($roles as $role) {
             array_push($result, $role->name);
         }
         //return array_merge(self::$defaultRoles, $result);

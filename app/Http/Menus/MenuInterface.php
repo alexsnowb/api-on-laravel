@@ -3,6 +3,7 @@
 *   07.11.2019
 *   GuestMenu.php
 */
+
 namespace App\Http\Menus;
 
 use App\MenuBuilder;

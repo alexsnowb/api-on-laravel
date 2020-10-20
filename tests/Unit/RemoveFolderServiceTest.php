@@ -16,8 +16,9 @@ use App\Services\RemoveFolderService;
 class RemoveFolderServiceTest extends TestCase
 {
     use DatabaseMigrations;
-    
-    public function testFindFolderChildrens(){
+
+    public function testFindFolderChildrens()
+    {
         $folder = new Folder();
         $folder->name = 'test1';
         $folder->save();
@@ -34,7 +35,8 @@ class RemoveFolderServiceTest extends TestCase
         $this->assertSame($result[1], $folder2->id);
     }
 
-    public function testFolderDelete(){
+    public function testFolderDelete()
+    {
         $folder = new Folder();
         $folder->name = 'test1';
         $folder->save();
@@ -51,14 +53,14 @@ class RemoveFolderServiceTest extends TestCase
         $folder4->folder_id = $folder->id;
         $folder4->save();
         $removeFolderService = new RemoveFolderService();
-        $this->assertDatabaseHas('folder',['name' => 'test1' ]);
-        $this->assertDatabaseHas('folder',['name' => 'test2' ]);
-        $this->assertDatabaseHas('folder',['name' => 'test3' ]);
-        $this->assertDatabaseHas('folder',['name' => 'test4' ]);
+        $this->assertDatabaseHas('folder', ['name' => 'test1']);
+        $this->assertDatabaseHas('folder', ['name' => 'test2']);
+        $this->assertDatabaseHas('folder', ['name' => 'test3']);
+        $this->assertDatabaseHas('folder', ['name' => 'test4']);
         $removeFolderService->folderDelete($folder2->id, null);
-        $this->assertDatabaseHas('folder',['name' => 'test1' ]);
-        $this->assertDatabaseMissing('folder',[ 'name' => 'test2']);
-        $this->assertDatabaseMissing('folder',[ 'name' => 'test3']);
-        $this->assertDatabaseHas('folder',['name' => 'test4' ]);
+        $this->assertDatabaseHas('folder', ['name' => 'test1']);
+        $this->assertDatabaseMissing('folder', ['name' => 'test2']);
+        $this->assertDatabaseMissing('folder', ['name' => 'test3']);
+        $this->assertDatabaseHas('folder', ['name' => 'test4']);
     }
 }

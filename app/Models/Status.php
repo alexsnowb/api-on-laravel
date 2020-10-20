@@ -10,7 +10,8 @@ class Status extends Model
     use HasFactory;
 
     protected $table = 'status';
-    public $timestamps = false; 
+    public $timestamps = false;
+
     /**
      * Get the notes for the status.
      */

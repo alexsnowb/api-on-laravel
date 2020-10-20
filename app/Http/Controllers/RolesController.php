@@ -19,20 +19,21 @@ class RolesController extends Controller
     public function index()
     {
         $roles = DB::table('roles')
-        ->leftJoin('role_hierarchy', 'roles.id', '=', 'role_hierarchy.role_id')
-        ->select('roles.*', 'role_hierarchy.hierarchy')
-        ->orderBy('hierarchy', 'asc')
-        ->get();
+            ->leftJoin('role_hierarchy', 'roles.id', '=', 'role_hierarchy.role_id')
+            ->select('roles.*', 'role_hierarchy.hierarchy')
+            ->orderBy('hierarchy', 'asc')
+            ->get();
         return view('dashboard.roles.index', array(
             'roles' => $roles,
         ));
     }
 
-    public function moveUp(Request $request){
+    public function moveUp(Request $request)
+    {
         $element = RoleHierarchy::where('role_id', '=', $request->input('id'))->first();
         $switchElement = RoleHierarchy::where('hierarchy', '<', $element->hierarchy)
             ->orderBy('hierarchy', 'desc')->first();
-        if(!empty($switchElement)){
+        if (!empty($switchElement)) {
             $temp = $element->hierarchy;
             $element->hierarchy = $switchElement->hierarchy;
             $switchElement->hierarchy = $temp;
@@ -42,11 +43,12 @@ class RolesController extends Controller
         return redirect()->route('roles.index');
     }
 
-    public function moveDown(Request $request){
+    public function moveDown(Request $request)
+    {
         $element = RoleHierarchy::where('role_id', '=', $request->input('id'))->first();
         $switchElement = RoleHierarchy::where('hierarchy', '>', $element->hierarchy)
             ->orderBy('hierarchy', 'asc')->first();
-        if(!empty($switchElement)){
+        if (!empty($switchElement)) {
             $temp = $element->hierarchy;
             $element->hierarchy = $switchElement->hierarchy;
             $switchElement->hierarchy = $temp;
@@ -69,7 +71,7 @@ class RolesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -78,10 +80,10 @@ class RolesController extends Controller
         $role->name = $request->input('name');
         $role->save();
         $hierarchy = RoleHierarchy::select('hierarchy')
-        ->orderBy('hierarchy', 'desc')->first();
-        if(empty($hierarchy)){
+            ->orderBy('hierarchy', 'desc')->first();
+        if (empty($hierarchy)) {
             $hierarchy = 0;
-        }else{
+        } else {
             $hierarchy = $hierarchy['hierarchy'];
         }
         $hierarchy = ((integer)$hierarchy) + 1;
@@ -96,7 +98,7 @@ class RolesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -109,7 +111,7 @@ class RolesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -122,8 +124,8 @@ class RolesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -132,13 +134,13 @@ class RolesController extends Controller
         $role->name = $request->input('name');
         $role->save();
         $request->session()->flash('message', 'Successfully updated role');
-        return redirect()->route('roles.edit', $id); 
+        return redirect()->route('roles.edit', $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, Request $request)
@@ -146,11 +148,11 @@ class RolesController extends Controller
         $role = Role::where('id', '=', $id)->first();
         $roleHierarchy = RoleHierarchy::where('role_id', '=', $id)->first();
         $menuRole = Menurole::where('role_name', '=', $role->name)->first();
-        if(!empty($menuRole)){
+        if (!empty($menuRole)) {
             $request->session()->flash('message', "Can't delete. Role has assigned one or more menu elements.");
             $request->session()->flash('back', 'roles.index');
             return view('dashboard.shared.universal-info');
-        }else{
+        } else {
             $role->delete();
             $roleHierarchy->delete();
             $request->session()->flash('message', "Successfully deleted role");

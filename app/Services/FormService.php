@@ -12,153 +12,160 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class FormService{
+class FormService
+{
 
-    public function __construct(){
+    public function __construct()
+    {
 
     }
 
-    public function saveSingleFormData($slug, $request, $formId){
+    public function saveSingleFormData($slug, $request, $formId)
+    {
 
         $formField = new FormField();
         $formField->name = $request[$slug . '_name'];
         $formField->type = $request[$slug . '_field_type'];
-        if(isset( $request[$slug . '_browse'] )){
+        if (isset($request[$slug . '_browse'])) {
             $formField->browse = 1;
-        }else{
+        } else {
             $formField->browse = 0;
         }
-        if(isset( $request[$slug . '_read'] )){
+        if (isset($request[$slug . '_read'])) {
             $formField->read = 1;
-        }else{
+        } else {
             $formField->read = 0;
         }
-        if(isset( $request[$slug . '_edit'] )){
+        if (isset($request[$slug . '_edit'])) {
             $formField->edit = 1;
-        }else{
+        } else {
             $formField->edit = 0;
         }
-        if(isset( $request[$slug . '_add'] )){
+        if (isset($request[$slug . '_add'])) {
             $formField->add = 1;
-        }else{
+        } else {
             $formField->add = 0;
         }
-        if(isset( $request[$slug . '_relation_table'] )){
+        if (isset($request[$slug . '_relation_table'])) {
             $formField->relation_table = $request[$slug . '_relation_table'];
         }
-        if(isset( $request[$slug . '_relation_column'] )){
+        if (isset($request[$slug . '_relation_column'])) {
             $formField->relation_column = $request[$slug . '_relation_column'];
         }
         $formField->form_id = $formId;
         $formField->column_name = $slug;
-        $formField->save();  
+        $formField->save();
     }
 
-    public function updateSingleFormField($field, $request){
+    public function updateSingleFormField($field, $request)
+    {
         $field->name = $request[$field->id . '_name'];
         $field->type = $request[$field->id . '_field_type'];
-        if(isset($request[$field->id . '_browse'])){
+        if (isset($request[$field->id . '_browse'])) {
             $field->browse = 1;
-        }else{
+        } else {
             $field->browse = 0;
         }
-        if(isset($request[$field->id . '_read'])){
+        if (isset($request[$field->id . '_read'])) {
             $field->read = 1;
-        }else{
+        } else {
             $field->read = 0;
         }
-        if(isset($request[$field->id . '_edit'])){
+        if (isset($request[$field->id . '_edit'])) {
             $field->edit = 1;
-        }else{
+        } else {
             $field->edit = 0;
         }
-        if(isset($request[$field->id . '_add'])){
+        if (isset($request[$field->id . '_add'])) {
             $field->add = 1;
-        }else{
+        } else {
             $field->add = 0;
         }
-        if(isset($request[$field->id . '_relation_table'])){
+        if (isset($request[$field->id . '_relation_table'])) {
             $field->relation_table = $request[$field->id . '_relation_table'];
         }
-        if(isset($request[$field->id . '_relation_column'])){
+        if (isset($request[$field->id . '_relation_column'])) {
             $field->relation_column = $request[$field->id . '_relation_column'];
         }
         $field->save();
     }
 
-    public function updateForm($formId, $request){
+    public function updateForm($formId, $request)
+    {
         $form = Form::find($formId);
         $form->name = $request['name'];
         $form->pagination = $request['pagination'];
-        if(isset($request['read'])){
+        if (isset($request['read'])) {
             $form->read = true;
-        }else{
+        } else {
             $form->read = false;
         }
-        if(isset($request['edit'])){
+        if (isset($request['edit'])) {
             $form->edit = true;
-        }else{
+        } else {
             $form->edit = false;
         }
-        if(isset($request['add'])){
+        if (isset($request['add'])) {
             $form->add = true;
-        }else{
+        } else {
             $form->add = false;
         }
-        if(isset($request['delete'])){
+        if (isset($request['delete'])) {
             $form->delete = true;
-        }else{
+        } else {
             $form->delete = false;
         }
         $form->save();
         $formFields = FormField::where('form_id', '=', $formId)->get();
-        foreach($formFields as $field){
+        foreach ($formFields as $field) {
             $this->updateSingleFormField($field, $request);
         }
-        $this->revokeAllPermisions( $form->id, $request );
-        $this->givePermissions( $form->id, $request );
+        $this->revokeAllPermisions($form->id, $request);
+        $this->givePermissions($form->id, $request);
     }
 
-    public function addNewForm( $model, $request ){
+    public function addNewForm($model, $request)
+    {
         $form = new Form();
         $form->name = $request['name'];
         $form->pagination = $request['pagination'];
         $form->table_name = $model;
-        if(isset($request['read'])){
+        if (isset($request['read'])) {
             $form->read = true;
-        }else{
+        } else {
             $form->read = false;
         }
-        if(isset($request['edit'])){
+        if (isset($request['edit'])) {
             $form->edit = true;
-        }else{
+        } else {
             $form->edit = false;
         }
-        if(isset($request['add'])){
+        if (isset($request['add'])) {
             $form->add = true;
-        }else{
+        } else {
             $form->add = false;
         }
-        if(isset($request['delete'])){
+        if (isset($request['delete'])) {
             $form->delete = true;
-        }else{
+        } else {
             $form->delete = false;
         }
         $form->save();
-        $formDatas = $this->getFormDataByModel( $model );
-        foreach($formDatas as $formData){
-            if($formData != 'id'){
+        $formDatas = $this->getFormDataByModel($model);
+        foreach ($formDatas as $formData) {
+            if ($formData != 'id') {
                 $this->saveSingleFormData($formData, $request, $form->id);
             }
         }
-        $this->givePermissions( $form->id, $request );
+        $this->givePermissions($form->id, $request);
     }
 
-    public function getBreadRoles( $formId ){
+    public function getBreadRoles($formId)
+    {
         $result = array();
         $roles = Role::all();
-        foreach($roles as $role){
-            if($role->hasPermissionTo('browse bread ' . $formId)){
+        foreach ($roles as $role) {
+            if ($role->hasPermissionTo('browse bread ' . $formId)) {
                 array_push($result, $role->name);
             }
         }
@@ -166,176 +173,182 @@ class FormService{
     }
 
 
-    public function createPermissions( $formId ){
+    public function createPermissions($formId)
+    {
         $permission = Permission::where('name', '=', 'browse bread ' . $formId)->first();
-        if(empty($permission)){
-            Permission::create(['name' => 'browse bread ' . $formId]); 
+        if (empty($permission)) {
+            Permission::create(['name' => 'browse bread ' . $formId]);
         }
         $permission = Permission::where('name', '=', 'read bread ' . $formId)->first();
-        if(empty($permission)){
+        if (empty($permission)) {
             Permission::create(['name' => 'read bread ' . $formId]);
         }
         $permission = Permission::where('name', '=', 'edit bread ' . $formId)->first();
-        if(empty($permission)){
-            Permission::create(['name' => 'edit bread ' . $formId]); 
+        if (empty($permission)) {
+            Permission::create(['name' => 'edit bread ' . $formId]);
         }
         $permission = Permission::where('name', '=', 'add bread ' . $formId)->first();
-        if(empty($permission)){
+        if (empty($permission)) {
             Permission::create(['name' => 'add bread ' . $formId]);
         }
         $permission = Permission::where('name', '=', 'delete bread ' . $formId)->first();
-        if(empty($permission)){
-            Permission::create(['name' => 'delete bread ' . $formId]); 
+        if (empty($permission)) {
+            Permission::create(['name' => 'delete bread ' . $formId]);
         }
     }
 
-    public function givePermissions( $formId, $request){
-        $this->createPermissions( $formId );
+    public function givePermissions($formId, $request)
+    {
+        $this->createPermissions($formId);
         $assign = array();
         $roles = Role::all();
-        foreach($roles as $role){
-            if(isset($request[ '_role_' . $role->name ])){
+        foreach ($roles as $role) {
+            if (isset($request['_role_' . $role->name])) {
                 $role->givePermissionTo('browse bread ' . $formId);
-                if(isset($request['read'])){
+                if (isset($request['read'])) {
                     $role->givePermissionTo('read bread ' . $formId);
                 }
-                if(isset($request['edit'])){
+                if (isset($request['edit'])) {
                     $role->givePermissionTo('edit bread ' . $formId);
                 }
-                if(isset($request['add'])){
+                if (isset($request['add'])) {
                     $role->givePermissionTo('add bread ' . $formId);
                 }
-                if(isset($request['delete'])){ 
+                if (isset($request['delete'])) {
                     $role->givePermissionTo('delete bread ' . $formId);
                 }
             }
         }
     }
 
-    public function revokeAllPermisions( $formId, $request){
+    public function revokeAllPermisions($formId, $request)
+    {
         $assign = array();
         $roles = Role::all();
-        foreach($roles as $role){
+        foreach ($roles as $role) {
             $permission = Permission::where('name', '=', 'browse bread ' . $formId)->first();
-            if(!empty($permission)){
+            if (!empty($permission)) {
                 $permission->removeRole($role);
             }
             $permission = Permission::where('name', '=', 'read bread ' . $formId)->first();
-            if(!empty($permission)){
+            if (!empty($permission)) {
                 $permission->removeRole($role);
             }
             $permission = Permission::where('name', '=', 'edit bread ' . $formId)->first();
-            if(!empty($permission)){
+            if (!empty($permission)) {
                 $permission->removeRole($role);
             }
             $permission = Permission::where('name', '=', 'add bread ' . $formId)->first();
-            if(!empty($permission)){
+            if (!empty($permission)) {
                 $permission->removeRole($role);
             }
             $permission = Permission::where('name', '=', 'delete bread ' . $formId)->first();
-            if(!empty($permission)){
+            if (!empty($permission)) {
                 $permission->removeRole($role);
             }
         }
     }
 
-    public function getFormDataByModel( $model ){
-        $columns = DB::getSchemaBuilder()->getColumnListing( $model );
+    public function getFormDataByModel($model)
+    {
+        $columns = DB::getSchemaBuilder()->getColumnListing($model);
         return $columns;
     }
 
 
     /** PRZERZUCIĆ TO DO INNEGO PLIKU */
-    public function getFromOptionsStandardInput(){
+    public function getFromOptionsStandardInput()
+    {
         return array(
             array(
-                'value'=> 'checkbox',
-                'name'=> 'checkbox'
+                'value' => 'checkbox',
+                'name' => 'checkbox'
             ),
             array(
-                'value'=> 'color',
+                'value' => 'color',
                 'name' => 'color'
             ),
             array(
-                'value'=> 'date',
+                'value' => 'date',
                 'name' => 'date'
             ),
             array(
-                'value'=> 'datetime-local',
+                'value' => 'datetime-local',
                 'name' => 'datetime-local'
             ),
             array(
-                'value'=> 'email',
+                'value' => 'email',
                 'name' => 'email'
             ),
             array(
-                'value'=> 'hidden',
+                'value' => 'hidden',
                 'name' => 'hidden'
             ),
             array(
-                'value'=> 'month',
+                'value' => 'month',
                 'name' => 'month'
             ),
             array(
-                'value'=> 'number',
+                'value' => 'number',
                 'name' => 'number'
             ),
             array(
-                'value'=> 'password',
+                'value' => 'password',
                 'name' => 'password'
             ),
             array(
-                'value'=> 'radio',
+                'value' => 'radio',
                 'name' => 'radio'
             ),
             array(
-                'value'=> 'range',
+                'value' => 'range',
                 'name' => 'range'
             ),
             array(
-                'value'=> 'reset',
+                'value' => 'reset',
                 'name' => 'reset'
             ),
             array(
-                'value'=> 'search',
+                'value' => 'search',
                 'name' => 'search'
             ),
             array(
-                'value'=> 'tel',
+                'value' => 'tel',
                 'name' => 'tel'
             ),
             array(
-                'value'=> 'text',
+                'value' => 'text',
                 'name' => 'text'
             ),
             array(
-                'value'=> 'time',
+                'value' => 'time',
                 'name' => 'time'
             ),
             array(
-                'value'=> 'url',
+                'value' => 'url',
                 'name' => 'url'
             ),
             array(
-                'value'=> 'week',
+                'value' => 'week',
                 'name' => 'week'
             ),
         );
     }
 
 
-    public function getFormOptions(){
+    public function getFormOptions()
+    {
         $otherOptions = array(
             array(
                 'value' => 'text_area',
                 'name' => 'text area'
             ),
             array(
-                'value'=> 'relation_select',
+                'value' => 'relation_select',
                 'name' => 'relation select'
             ),
             array(
-                'value'=> 'relation_radio',
+                'value' => 'relation_radio',
                 'name' => 'relation radio'
             ),
             array(
@@ -347,6 +360,6 @@ class FormService{
                 'name' => 'image'
             )
         );
-        return array_merge( $this->getFromOptionsStandardInput(), $otherOptions);
+        return array_merge($this->getFromOptionsStandardInput(), $otherOptions);
     }
 }

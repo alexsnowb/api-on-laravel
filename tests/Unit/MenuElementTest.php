@@ -16,7 +16,8 @@ class MenuElementTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testMenuElementsIndex(){
+    public function testMenuElementsIndex()
+    {
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
         $user->assignRole($adminRole);
@@ -32,7 +33,8 @@ class MenuElementTest extends TestCase
         $response->assertSee('Menu Elements');
     }
 
-    public function testMenuCreate(){
+    public function testMenuCreate()
+    {
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
         $user->assignRole($adminRole);
@@ -45,7 +47,8 @@ class MenuElementTest extends TestCase
         $response->assertSee('Create menu element');
     }
 
-    public function testMenuStore(){
+    public function testMenuStore()
+    {
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
         $user->assignRole($adminRole);
@@ -61,14 +64,14 @@ class MenuElementTest extends TestCase
             'type' => 'link',
             'href' => 'test3',
             'parent' => '1',
-            'icon' => 'test4', 
+            'icon' => 'test4',
         ];
         $response = $this->actingAs($user)->post('/menu/element/store', $postArray);
-        $this->assertDatabaseHas('menu_role',[
+        $this->assertDatabaseHas('menu_role', [
             'role_name' => 'admin',
             'menus_id' => 1,
         ]);
-        $this->assertDatabaseHas('menus',[
+        $this->assertDatabaseHas('menus', [
             'slug' => 'link',
             'menu_id' => 1,
             'name' => 'test2',
@@ -79,7 +82,8 @@ class MenuElementTest extends TestCase
         ]);
     }
 
-    public function testMenuEdit(){
+    public function testMenuEdit()
+    {
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
         $user->assignRole($adminRole);
@@ -95,7 +99,7 @@ class MenuElementTest extends TestCase
         $menus->parent_id = 1;
         $menus->sequence = 1;
         $menus->save();
-        $response = $this->actingAs($user)->get('/menu/element/edit?id=1' );
+        $response = $this->actingAs($user)->get('/menu/element/edit?id=1');
         $response->assertSee('<option value="1" selected>test2</option>', false);
         $response->assertSee('<input type="checkbox" name="role[]" value="admin" class="form-control"/>', false);
         $response->assertSee('test2');
@@ -104,7 +108,8 @@ class MenuElementTest extends TestCase
         $response->assertSee('Edit menu element');
     }
 
-    public function testMenuUpdate(){
+    public function testMenuUpdate()
+    {
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
         $user->assignRole($adminRole);
@@ -130,9 +135,9 @@ class MenuElementTest extends TestCase
             'type' => 'link',
             'href' => 'test33',
             'parent' => '2',
-            'icon' => 'test44', 
+            'icon' => 'test44',
         ];
-        $this->assertDatabaseHas('menus',[
+        $this->assertDatabaseHas('menus', [
             'slug' => 'link',
             'menu_id' => 1,
             'name' => 'test2',
@@ -142,11 +147,11 @@ class MenuElementTest extends TestCase
             'sequence' => 1,
         ]);
         $response = $this->actingAs($user)->post('/menu/element/update', $postArray);
-        $this->assertDatabaseHas('menu_role',[
+        $this->assertDatabaseHas('menu_role', [
             'role_name' => 'admin',
             'menus_id' => 1,
         ]);
-        $this->assertDatabaseHas('menus',[
+        $this->assertDatabaseHas('menus', [
             'slug' => 'link',
             'menu_id' => 1,
             'name' => 'test22',
@@ -157,7 +162,8 @@ class MenuElementTest extends TestCase
         ]);
     }
 
-    public function testMenuDelete(){
+    public function testMenuDelete()
+    {
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
         $user->assignRole($adminRole);
@@ -174,9 +180,9 @@ class MenuElementTest extends TestCase
         $menuRole->role_name = 'admin';
         $menuRole->menus_id = $menus->id;
         $menuRole->save();
-        $this->assertDatabaseHas('menus',['id' => $menus->id]);
+        $this->assertDatabaseHas('menus', ['id' => $menus->id]);
         $response = $this->actingAs($user)->get('/menu/element/delete?id=' . $menus->id);
-        $this->assertDatabaseMissing('menus',['id' => $menus->id]);
-        $this->assertDatabaseMissing('menu_role',['menus_id' => $menus->id]);
+        $this->assertDatabaseMissing('menus', ['id' => $menus->id]);
+        $this->assertDatabaseMissing('menu_role', ['menus_id' => $menus->id]);
     }
 }

@@ -37,36 +37,36 @@ class BreadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'model'       => 'required|min:1|max:128',
-            'marker'      => 'required'
+            'model' => 'required|min:1|max:128',
+            'marker' => 'required'
         ]);
         $formService = new FormService();
-        if($request->has('marker') && $request->input('marker') === 'selectModel'){
+        if ($request->has('marker') && $request->input('marker') === 'selectModel') {
             $model = DB::getSchemaBuilder()->getColumnListing($request->input('model'));
-            if(empty($model)){
+            if (empty($model)) {
                 $request->session()->flash('message', 'Table not detected, or there is no columns in table');
                 return view('dashboard.form.create');
-            }else{
+            } else {
                 $rolesService = new RolesService();
 
                 return view('dashboard.form.create2', [
-                    'columns' => $formService->getFormDataByModel( $request->input('model') ),
+                    'columns' => $formService->getFormDataByModel($request->input('model')),
                     'options' => $formService->getFormOptions(),
-                    'model'   => $request->input('model'),
-                    'roles'   => $rolesService->get(),
-                ]); 
+                    'model' => $request->input('model'),
+                    'roles' => $rolesService->get(),
+                ]);
             }
-        }else{
+        } else {
             $validatedData = $request->validate([
-                'name'    => 'required|min:1|max:128',
+                'name' => 'required|min:1|max:128',
             ]);
-            $formService->addNewForm($request->input('model'), $request->all() );
+            $formService->addNewForm($request->input('model'), $request->all());
             $request->session()->flash('message', 'Successfully added form');
             return redirect()->route('bread.index');
         }
@@ -75,21 +75,21 @@ class BreadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         return view('dashboard.form.show', [
             'form' => Form::find($id),
-            'formFields' => FormField::where('form_id', '=', $id)->get(),    
+            'formFields' => FormField::where('form_id', '=', $id)->get(),
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -100,22 +100,22 @@ class BreadController extends Controller
             'form' => Form::find($id),
             'formFields' => FormField::where('form_id', '=', $id)->get(),
             'options' => $formService->getFormOptions(),
-            'roles'   => $rolesService->get(),
-            'formRoles' => $formService->getBreadRoles($id),    
+            'roles' => $rolesService->get(),
+            'formRoles' => $formService->getBreadRoles($id),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name'    => 'required|min:1|max:128',
+            'name' => 'required|min:1|max:128',
         ]);
         //$model = Models::find($request->input('model'));
         $formService = new FormService();
@@ -127,18 +127,18 @@ class BreadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, Request $request)
     {
         $form = Form::find($id);
-        if($request->has('marker')){
+        if ($request->has('marker')) {
             $formFields = FormField::where('form_id', '=', $id)->delete();
             $form->delete();
             $request->session()->flash('message', 'Successfully deleted form: ' . $form->name);
             return redirect()->route('bread.index');
-        }else{
+        } else {
             return view('dashboard.form.delete', ['id' => $id, 'formName' => $form->name]);
         }
     }

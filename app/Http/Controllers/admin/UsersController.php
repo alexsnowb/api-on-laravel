@@ -32,14 +32,14 @@ class UsersController extends Controller
 
     /**
      *  Remove user
-     * 
-     *  @param int $id 
+     *
+     * @param int $id
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function remove( $id )
+    public function remove($id)
     {
         $user = User::find($id);
-        if($user){
+        if ($user) {
             $user->delete();
         }
         return redirect()->route('adminUsers');
@@ -47,17 +47,18 @@ class UsersController extends Controller
 
     /**
      *  Show the form for editing the user.
-     * 
-     *  @param int $id
-     *  @return \Illuminate\Contracts\Support\Renderable
+     *
+     * @param int $id
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function editForm( $id )
+    public function editForm($id)
     {
         $user = User::find($id);
         return view('dashboard.admin.userEditForm', compact('user'));
     }
 
-    public function edit(){
+    public function edit()
+    {
 
     }
 
