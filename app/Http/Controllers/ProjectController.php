@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\Notes;
+use App\Models\Project;
 use App\Models\Status;
+use Illuminate\Http\Request;
 
-class NotesController extends Controller
+class ProjectController extends Controller
 {
 
     /**
@@ -27,8 +26,8 @@ class NotesController extends Controller
      */
     public function index()
     {
-        $notes = Notes::with('user')->with('status')->paginate(20);
-        return view('dashboard.notes.notesList', ['notes' => $notes]);
+        $projects = Project::with(['user', 'status'])->paginate(20);
+        return view('dashboard.projects.projectsList', ['projects' => $projects]);
     }
 
     /**
@@ -39,7 +38,7 @@ class NotesController extends Controller
     public function create()
     {
         $statuses = Status::all();
-        return view('dashboard.notes.create', ['statuses' => $statuses]);
+        return view('dashboard.projects.create', ['statuses' => $statuses]);
     }
 
     /**
@@ -51,23 +50,23 @@ class NotesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:1|max:64',
-            'content' => 'required',
-            'status_id' => 'required',
-            'applies_to_date' => 'required|date_format:Y-m-d',
-            'note_type' => 'required'
+            'name' => 'required|min:1|max:64',
+            'description' => 'required',
         ]);
         $user = auth()->user();
-        $note = new Notes();
-        $note->title = $request->input('title');
-        $note->content = $request->input('content');
-        $note->status_id = $request->input('status_id');
-        $note->note_type = $request->input('note_type');
-        $note->applies_to_date = $request->input('applies_to_date');
-        $note->users_id = $user->id;
-        $note->save();
-        $request->session()->flash('message', 'Successfully created note');
-        return redirect()->route('notes.index');
+        $statusNew = Status::firstOrCreate(
+            ['name'  => 'new'],
+            ['class' => 'badge badge-pill badge-success']
+        );
+
+        $project = new Project();
+        $project->name = $request->input('name');
+        $project->description = $request->input('description');
+        $project->status_id = $statusNew->id;
+        $project->user_id = $user->id;
+        $project->save();
+        $request->session()->flash('message', 'Successfully created project');
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -78,8 +77,8 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        $note = Notes::with('user')->with('status')->find($id);
-        return view('dashboard.notes.noteShow', ['note' => $note]);
+        $project = Project::with(['user', 'status'])->findOrFail($id);
+        return view('dashboard.projects.projectShow', ['project' => $project]);
     }
 
     /**
@@ -90,9 +89,9 @@ class NotesController extends Controller
      */
     public function edit($id)
     {
-        $note = Notes::find($id);
+        $project = Project::findOrFail($id);
         $statuses = Status::all();
-        return view('dashboard.notes.edit', ['statuses' => $statuses, 'note' => $note]);
+        return view('dashboard.notes.edit', ['statuses' => $statuses, 'project' => $project]);
     }
 
     /**
@@ -106,21 +105,15 @@ class NotesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required|min:1|max:64',
-            'content' => 'required',
-            'status_id' => 'required',
-            'applies_to_date' => 'required|date_format:Y-m-d',
-            'note_type' => 'required'
+            'name' => 'required|min:1|max:64',
+            'description' => 'required',
         ]);
-        $note = Notes::findOrFail($id);
-        $note->title = $request->input('title');
-        $note->content = $request->input('content');
-        $note->status_id = $request->input('status_id');
-        $note->note_type = $request->input('note_type');
-        $note->applies_to_date = $request->input('applies_to_date');
+        $note = Project::findOrFail($id);
+        $note->name = $request->input('name');
+        $note->description = $request->input('description');
         $note->save();
-        $request->session()->flash('message', 'Successfully edited note');
-        return redirect()->route('notes.index');
+        $request->session()->flash('message', 'Successfully edited project');
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -132,10 +125,10 @@ class NotesController extends Controller
      */
     public function destroy($id)
     {
-        /** @var Notes $note */
-        $note = Notes::findOrFail($id);
-        $note->delete();
+        /** @var Project $project */
+        $project = Project::findOrFail($id);
+        $project->delete();
 
-        return redirect()->route('notes.index');
+        return redirect()->route('projects.index');
     }
 }
