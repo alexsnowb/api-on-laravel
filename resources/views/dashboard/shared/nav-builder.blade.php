@@ -9,7 +9,7 @@ if(!function_exists('renderDropdown')){
             echo '<li class="c-sidebar-nav-dropdown">';
             echo '<a class="c-sidebar-nav-dropdown-toggle" href="#">';
             if($data['hasIcon'] === true && $data['iconType'] === 'coreui'){
-                echo '<i class="' . $data['icon'] . ' c-sidebar-nav-icon"></i>';    
+                echo '<i class="' . $data['icon'] . ' c-sidebar-nav-icon"></i>';
             }
             echo $data['name'] . '</a>';
             echo '<ul class="c-sidebar-nav-dropdown-items">';
@@ -30,7 +30,7 @@ if(!function_exists('renderDropdown')){
 }
 ?>
 
-      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ url('/assets/brand/coreui-base-white.svg') }}" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="assets/brand/coreui-signet-white.svg" width="118" height="46" alt="CoreUI Logo"></div>
+      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ url('/assets/brand/coreui-base-white.svg') }}" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/assets/brand/coreui-signet-white.svg" width="118" height="46" alt="CoreUI Logo"></div>
         <ul class="c-sidebar-nav">
         @if(isset($appMenus['sidebar menu']))
             @foreach($appMenus['sidebar menu'] as $menuel)
@@ -41,7 +41,7 @@ if(!function_exists('renderDropdown')){
                             @if($menuel['iconType'] === 'coreui')
                                 <i class="{{ $menuel['icon'] }} c-sidebar-nav-icon"></i>
                             @endif
-                        @endif 
+                        @endif
                         {{ $menuel['name'] }}
                         </a>
                     </li>
@@ -53,7 +53,7 @@ if(!function_exists('renderDropdown')){
                             @if($menuel['iconType'] === 'coreui')
                                 <i class="{{ $menuel['icon'] }} c-sidebar-nav-icon"></i>
                             @endif
-                        @endif 
+                        @endif
                         {{ $menuel['name'] }}
                     </li>
                 @endif

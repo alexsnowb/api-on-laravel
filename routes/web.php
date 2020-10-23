@@ -69,6 +69,7 @@ Route::group(['middleware' => ['get.menu']], function () {
 
         Route::resource('notes', 'NotesController');
         Route::resource('projects', 'ProjectController');
+        Route::resource('projects/{project}/tasks', 'TaskController');
     });
 
     Auth::routes();
