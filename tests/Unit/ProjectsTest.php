@@ -25,15 +25,13 @@ class ProjectsTest extends TestCase
         $user = User::factory()->create();
         $roleUser = Role::create(['name' => 'user']);
         $user->assignRole($roleUser);
-        /** @var Project $projectOne */
-        $projectOne = Project::factory()->create();
-        /** @var Project $projectTwo */
-        $projectTwo = Project::factory()->create();
+        /** @var Project[] $projectList */
+        $projectList = Project::factory()->count(2)->create();
         $response = $this->actingAs($user)->get('/projects');
-        $response->assertSee($projectOne->name)
-            ->assertSee($projectOne->description)
-            ->assertSee($projectTwo->name)
-            ->assertSee($projectTwo->description);
+        $response->assertSee($projectList[0]->name)
+            ->assertSee($projectList[0]->description)
+            ->assertSee($projectList[1]->name)
+            ->assertSee($projectList[1]->description);
     }
 
     /**
@@ -58,8 +56,6 @@ class ProjectsTest extends TestCase
         $user = User::factory()->create();
         $roleUser = Role::create(['name' => 'user']);
         $user->assignRole($roleUser);
-        /** @var Project $note */
-        $project = Project::factory()->create();
         $response = $this->actingAs($user)->get('/projects/create');
         $response->assertSee('Create Project');
     }

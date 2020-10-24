@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ *
+ *
+ * @property mixed id
  * @property mixed name
  * @property mixed description
  * @property int|mixed project_id
@@ -16,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed method
  * @property mixed url
  * @property mixed lastRunTime
+ * @property Project project
  */
 class Task extends Model
 {

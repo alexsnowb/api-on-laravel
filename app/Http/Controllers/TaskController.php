@@ -64,12 +64,7 @@ class TaskController extends Controller
         );
 
         $task = new Task();
-        $task->name = $request->input('name');
-        $task->description = $request->input('description');
-        $task->url = $request->input('url');
-        $task->method = $request->input('method');
-        $task->body = $request->input('body');
-        $task->period = $request->input('period');
+        $this->fillMainProperty($request, $task);
         $task->status_id = $statusNew->id;
         $task->user_id = $user->id;
         $task->project_id = $project->id;
@@ -98,31 +93,34 @@ class TaskController extends Controller
      */
     public function edit(Project $project, $id)
     {
-        $project = Project::findOrFail($id);
-        $statuses = Status::all();
-        return view('dashboard.projects.tasks.edit', ['statuses' => $statuses, 'project' => $project]);
+        /** @var Task $task */
+        $task = Task::with(['project'])->findOrFail($id);
+        $project = $task->project;
+
+        return view('dashboard.projects.tasks.edit', ['task' => $task, 'project' => $project]);
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param Project $project
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @throws \Exception
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function update(Project $project, Request $request, $id)
     {
         $request->validate([
             'name' => 'required|min:1|max:64',
-            'description' => 'required',
+            'url' => 'required',
+            'method' => 'required',
+            'period' => 'required',
         ]);
         $task = Task::findOrFail($id);
-        $task->name = $request->input('name');
-        $task->description = $request->input('description');
+        $this->fillMainProperty($request, $task);
         $task->save();
-        $request->session()->flash('message', 'Successfully edited project');
-        return redirect()->route('tasks.index');
+        $request->session()->flash('message', 'Successfully edited task');
+        return redirect()->route('projects.show', ['project' => $project]);
     }
 
     /**
@@ -140,4 +138,19 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('projects.show', ['project' => $project]);
-    }}
+    }
+
+    /**
+     * @param Request $request
+     * @param \Illuminate\Database\Eloquent\Model $task
+     */
+    public function fillMainProperty(Request $request, Task $task): void
+    {
+        $task->name = $request->input('name');
+        $task->description = $request->input('description');
+        $task->url = $request->input('url');
+        $task->method = $request->input('method');
+        $task->body = $request->input('body');
+        $task->period = $request->input('period');
+    }
+}
